@@ -13,8 +13,20 @@ import { object, string } from "yup"
 
 const Login = () => {
   const loginSchema = object({
-    email: string().email().required(),
-    password: string().required(),
+    email: string()
+      .email("Lütfen geçerli bir email giriniz ")
+      .required("Email girişi zorunludur 📧"),
+    password: string()
+      .required("Şifre zorunludur 🔑")
+      .min(8, "Şifre en az 8 karakter içermelidir")
+      .max(16, "Şifre en falza 16 karakter içermelidir")
+      .matches(/\d+/, "Şifre en az bir rakam içermelidir")
+      .matches(/[a-z]/, "Şifre en az bir küçük harf içermelidir")
+      .matches(/[A-Z]/, "Şifre en az bir büyük harf içermelidir")
+      .matches(
+        /[@$!%*?&]+/,
+        "Şifre en az bir özel karakter (@$!%*?&) içermelidir"
+      ),
   })
   return (
     <Container maxWidth="lg">
@@ -65,7 +77,7 @@ const Login = () => {
               //? tost yapılabilr
             }}
           >
-            {({ handleChange, values, touched, errors }) => (
+            {({ handleChange, values, touched, errors, handleBlur }) => (
               <Form>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   <TextField
@@ -76,8 +88,11 @@ const Login = () => {
                     variant="outlined"
                     value={values.email}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     error={touched.email && Boolean(errors.email)}
                     helperText={errors.email}
+                    autoComplete="off"
+
                   />
                   <TextField
                     label="password"
@@ -87,6 +102,10 @@ const Login = () => {
                     variant="outlined"
                     value={values.password}
                     onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.password && Boolean(errors.password)}
+                    helperText={errors.password}
+                    autoComplete="off"
                   />
                   <Button variant="contained" type="submit">
                     Submit
