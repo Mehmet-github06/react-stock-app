@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField"
 import { Button } from "@mui/material"
 import { Formik, Form } from "formik"
 import { object, string } from "yup"
+import { login } from "../service/authApiCall"
 
 const Login = () => {
   const loginSchema = object({
@@ -69,7 +70,10 @@ const Login = () => {
             initialValues={{ email: "", password: "" }}
             validationSchema={loginSchema}
             onSubmit={(values, actions) => {
+
               //TODO login(post) istegi
+              login(values)
+              
               actions.resetForm()
               actions.setSubmitting(false) //? isSubmitting
               //? veriler global state'e aktırlabilir
