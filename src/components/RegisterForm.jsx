@@ -17,9 +17,9 @@ export const registerSchema = object({
 
   email: string()
     .email("Lütfen geçerli bir email giriniz.")
-    .required("Email zorunludur"),
+    .required("Email zorunludur 📧"),
   password: string()
-    .required("Şifre zorunludur")
+    .required("Şifre zorunludur 🔑")
     .min(8, "Şifre en az 8 karakter olmalıdır")
     .max(20, "Şifre en fazla 20 karakter olmalıdır")
     .matches(/\d+/, "Şifre bir sayı içermelidir")

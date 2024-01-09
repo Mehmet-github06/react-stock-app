@@ -10,18 +10,17 @@ import TextField from "@mui/material/TextField"
 import { Button } from "@mui/material"
 import { Formik, Form } from "formik"
 import { object, string } from "yup"
-import  useAuthCalls  from "../service/useAuthCalls"
+import useAuthCalls from "../service/useAuthCalls"
 
 const Login = () => {
-const {login} = useAuthCalls()
-
+  const { login } = useAuthCalls()
 
   const loginSchema = object({
     email: string()
-      .email("Lütfen geçerli bir email giriniz ")
-      .required("Email girişi zorunludur 📧"),
+      .email("Lütfen geçerli bir email giriniz")
+      .required("Email girişi zorunludur"),
     password: string()
-      .required("Şifre zorunludur 🔑")
+      .required("Şifre zorunludur.")
       .min(8, "Şifre en az 8 karakter içermelidir")
       .max(16, "Şifre en falza 16 karakter içermelidir")
       .matches(/\d+/, "Şifre en az bir rakam içermelidir")
@@ -73,10 +72,8 @@ const {login} = useAuthCalls()
             initialValues={{ email: "", password: "" }}
             validationSchema={loginSchema}
             onSubmit={(values, actions) => {
-
               //TODO login(post) istegi
               login(values)
-
               actions.resetForm()
               actions.setSubmitting(false) //? isSubmitting
               //? veriler global state'e aktırlabilir
@@ -98,8 +95,6 @@ const {login} = useAuthCalls()
                     onBlur={handleBlur}
                     error={touched.email && Boolean(errors.email)}
                     helperText={errors.email}
-                    autoComplete="off"
-
                   />
                   <TextField
                     label="password"
@@ -112,7 +107,6 @@ const {login} = useAuthCalls()
                     onBlur={handleBlur}
                     error={touched.password && Boolean(errors.password)}
                     helperText={errors.password}
-                    autoComplete="off"
                   />
                   <Button variant="contained" type="submit">
                     Submit
