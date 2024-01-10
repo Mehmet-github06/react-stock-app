@@ -1,22 +1,47 @@
-import React from 'react'
-import useAxios from './useAxios'
-import { fetchFail,fetchStart,getFirmsSuccess } from '../features/stockSlice'
+import { fetchStart, fetchFail, getStockSuccess } from "../features/stockSlice"
+import useAxios from "./useAxios"
+import { toastErrorNotify } from "../helper/ToastNotify"
+import { useDispatch } from "react-redux"
 
 const useStockCalls = () => {
-const getFirms = async () =>{
-    dispatch(fetchStart)
+  const { axiosWithToken } = useAxios()
+  const dispatch = useDispatch()
+
+  //   const getFirms = async () => {
+  //     dispatch(fetchStart())
+  //     try {
+  //       const { data } = await axiosWithToken("/firms/")
+  //       dispatch(getFirmsSuccess(data.data))
+  //     } catch (error) {
+  //       dispatch(fetchFail())
+  //       toastErrorNotify("Firm bilgileri çekilemedi.")
+  //     }
+  //   }
+
+  //   const getSales = async () => {
+  //     dispatch(fetchStart())
+  //     try {
+  //       const { data } = await axiosWithToken("/sales/")
+  //       dispatch(getSalesSuccess(data.data))
+  //     } catch (error) {
+  //       dispatch(fetchFail())
+  //       toastErrorNotify("Sales bilgileri çekilemedi.")
+  //     }
+  //   }
+
+  const getStocks = async (url = "firms") => {
+    dispatch(fetchStart())
     try {
-        const {data} = await axiosWithtoken("/firms")
-        dispatch(getFirmsSuccess(data))
+      const { data } = await axiosWithToken(`/${url}/`)
+      const apiData = data.data
+      dispatch(getStockSuccess({ apiData, url }))
     } catch (error) {
-        
+      dispatch(fetchFail())
+      toastErrorNotify(`${url} bilgileri çekilemedi.`)
     }
-}
+  }
 
-
-
-    
-  return {getFirms}
+  return { getStocks }
 }
 
 export default useStockCalls

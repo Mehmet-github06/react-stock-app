@@ -32,7 +32,7 @@ const authSlice = createSlice({
     fetchFail: (state) => {
       state.loading = false
       state.error = true
-    }, 
+    },
   },
 })
 
