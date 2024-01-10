@@ -57,7 +57,7 @@ const MenuListItems = () => {
         </ListItem>
       ))}
     </List>
-  )
+  )                           
 }
 
 export default MenuListItems
