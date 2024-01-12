@@ -1,27 +1,33 @@
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Modal from "@mui/material/Modal";
-import { modalStyle } from "../styles/globalStyles";
+// import { useState } from "react"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import TextField from "@mui/material/TextField"
+import Modal from "@mui/material/Modal"
+import { modalStyle } from "../styles/globalStyles"
+import useStockCalls from "../service/useStockCalls"
 
-export default function FirmModal({ open, handleClose ,info, setInfo}) {
-
+export default function FirmModal({ open, handleClose, info, setInfo }) {
+  const { postStock, putStock } = useStockCalls()
 
   const handleChange = (e) => {
     // const { name, value } = e.target
     // setInfo({ ...info, [name]: value })
-    setInfo({ ...info, [e.target.name]: e.target.value });
-  };
+    setInfo({ ...info, [e.target.name]: e.target.value })
+  }
 
+  console.log(info)
   const handleSubmit = (e) => {
-    e.preventDefault();
-    handleClose();
- 
-  };
+    e.preventDefault()
+    if (info._id) {
+      putStock("firms", info)
+    } else {
+      postStock("firms", info)
+    }
 
-  console.log(info);
+    handleClose()
+  }
+
+  console.log(info)
   return (
     <div>
       <Modal
@@ -46,7 +52,6 @@ export default function FirmModal({ open, handleClose ,info, setInfo}) {
               onChange={handleChange}
               required
             />
-
             <TextField
               label="Phone"
               name="phone"
@@ -77,12 +82,16 @@ export default function FirmModal({ open, handleClose ,info, setInfo}) {
               onChange={handleChange}
               required
             />
-            <Button type="submit" variant="contained" size="large">
-              Submit
+            <Button
+              type="submit"
+              size="large"
+              style={{ backgroundColor: "black", color: "white" }}
+            >
+              {info._id ? "Update Firm" : "Add Firm"}
             </Button>
           </Box>
         </Box>
       </Modal>
     </div>
-  );
+  )
 }
