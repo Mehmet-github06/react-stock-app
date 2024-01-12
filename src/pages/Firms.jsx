@@ -20,7 +20,7 @@ const Firms = () => {
   return (
     <div>
       <Typography variant="h4" color="error" mb={3}>
-        Firmssss
+        Firms
       </Typography>
       <Button variant="contained">New Firm</Button>
 
