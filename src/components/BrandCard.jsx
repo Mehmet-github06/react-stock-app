@@ -8,10 +8,10 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import { btnStyle } from "../styles/globalStyles";
 import useStockCalls from "../service/useStockCalls";
-import NewFirmModal from "./NewFirmModal";
+import NewBrandModal from "./NewBrandModal";
 
-export default function FirmCard({ firm }) {
-  const { address, image, name, phone, _id } = firm;
+export default function BrandCard({ brand }) {
+  const { image, name, _id } = brand;
   const { deleteStock } = useStockCalls();
 
   const [open, setOpen] = React.useState(false);
@@ -35,9 +35,6 @@ export default function FirmCard({ firm }) {
         <Typography gutterBottom variant="h5" component="div">
           {name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {address}
-        </Typography>
       </CardContent>
       <CardMedia
         component="img"
@@ -47,18 +44,14 @@ export default function FirmCard({ firm }) {
         sx={{ objectFit: "contain" }}
       />
 
-      <Typography variant="body2" color="text.secondary">
-        {phone}
-      </Typography>
-
       <CardActions>
         <DeleteOutlineIcon
           sx={btnStyle}
-          onClick={() => deleteStock("firms", _id)}
+          onClick={() => deleteStock("brands", _id)}
         />
         <EditIcon sx={btnStyle} onClick={handleOpen} />
       </CardActions>
-      <NewFirmModal open={open} handleClose={handleClose} firm={firm}/>
+      <NewBrandModal open={open} handleClose={handleClose} brand={brand} />
     </Card>
   );
 }
