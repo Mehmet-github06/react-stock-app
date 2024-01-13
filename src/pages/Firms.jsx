@@ -1,38 +1,48 @@
-import Button from "@mui/material/Button"
-import Typography from "@mui/material/Typography"
-import { useEffect, useState } from "react"
-import useStockCalls from "../service/useStockCalls"
-import { useSelector } from "react-redux"
-import { Grid } from "@mui/material"
-import FirmCard from "../components/FirmCard"
-import FirmModal from "../components/FirmModal"
-
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
+import useStockCalls from "../service/useStockCalls";
+import { useSelector } from "react-redux";
+import { Grid } from "@mui/material";
+import FirmCard from "../components/FirmCard";
+import FirmModal from "../components/FirmModal";
+import Skeleton from "@mui/material/Skeleton";
 const Firms = () => {
   // const { getFirms, getSales } = useStockCalls()
-  const { getStocks } = useStockCalls()
-  const { firms } = useSelector((state) => state.stock)
+  const { getStocks } = useStockCalls();
+  const { firms, loading } = useSelector((state) => state.stock);
 
   const [info, setInfo] = useState({
     name: "",
     phone: "",
     address: "",
     image: "",
-  })
+  });
 
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
   const handleClose = () => {
-    setOpen(false)
-    setInfo({ name: "", phone: "", address: "", image: "" })
-  }
+    setOpen(false);
+    setInfo({ name: "", phone: "", address: "", image: "" });
+  };
 
   useEffect(() => {
     // getFirms()
-    getStocks("firms")
-  }, [])
+    getStocks("firms");
+  }, []);
 
-  console.log(firms)
-
+  console.log(firms);
+  if (loading) {
+    return (
+      <Grid container gap={2} mt={3} justifyContent={"center"}>
+        {[...new Array(8)].map((_, index) => ( 
+          <Grid item key={index}>
+            <Skeleton  animation="wave" width={300} height={700} />
+          </Grid>
+        ))}
+      </Grid>
+    );
+  }
   return (
     <div>
       <Typography variant="h4" color="error" mb={3}>
@@ -57,7 +67,7 @@ const Firms = () => {
         ))}
       </Grid>
     </div>
-  )
-}
+  );
+};
 
-export default Firms
+export default Firms;
