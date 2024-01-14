@@ -8,7 +8,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import { btnStyle } from "../styles/globalStyles";
 import useStockCalls from "../service/useStockCalls";
-import NewBrandModal from "./NewBrandModal";
+import BrandModal from "./BrandModal";
 
 export default function BrandCard({ brand }) {
   const { image, name, _id } = brand;
@@ -51,7 +51,7 @@ export default function BrandCard({ brand }) {
         />
         <EditIcon sx={btnStyle} onClick={handleOpen} />
       </CardActions>
-      <NewBrandModal open={open} handleClose={handleClose} brand={brand} />
+      <BrandModal open={open} handleClose={handleClose} brand={brand} />
     </Card>
   );
 }

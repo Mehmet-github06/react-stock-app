@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import useStockCalls from "../service/useStockCalls";
 import { useSelector } from "react-redux";
 import { Grid } from "@mui/material";
-import NewBrandModal from "../components/NewBrandModal";
+import BrandModal from "../components/BrandModal";
 import * as React from "react";
 import BrandCard from "../components/BrandCard";
 
@@ -38,7 +38,7 @@ const Brands = () => {
           </Grid>
         ))}
       </Grid>
-      <NewBrandModal open={open} handleClose={handleClose} />
+      <BrandModal open={open} handleClose={handleClose} />
     </div>
   );
 };
