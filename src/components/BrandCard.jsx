@@ -1,23 +1,17 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EditIcon from "@mui/icons-material/Edit";
-import { btnStyle } from "../styles/globalStyles";
-import useStockCalls from "../service/useStockCalls";
-import BrandModal from "./BrandModal";
+import * as React from "react"
+import Card from "@mui/material/Card"
+import CardActions from "@mui/material/CardActions"
+import CardContent from "@mui/material/CardContent"
+import CardMedia from "@mui/material/CardMedia"
+import Typography from "@mui/material/Typography"
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
+import EditIcon from "@mui/icons-material/Edit"
+import { btnStyle } from "../styles/globalStyles"
+import useStockCalls from "../service/useStockCalls"
 
-export default function BrandCard({ brand }) {
-  const { image, name, _id } = brand;
-  const { deleteStock } = useStockCalls();
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+export default function BrandCard({ brand, handleOpen, setInfo }) {
+  const {  image, name, _id } = brand
+  const { deleteStock } = useStockCalls()
   return (
     <Card
       sx={{
@@ -49,9 +43,14 @@ export default function BrandCard({ brand }) {
           sx={btnStyle}
           onClick={() => deleteStock("brands", _id)}
         />
-        <EditIcon sx={btnStyle} onClick={handleOpen} />
+        <EditIcon
+          sx={btnStyle}
+          onClick={() => {
+            handleOpen()
+            setInfo(brand)
+          }}
+        />
       </CardActions>
-      <BrandModal open={open} handleClose={handleClose} brand={brand} />
     </Card>
-  );
+  )
 }
