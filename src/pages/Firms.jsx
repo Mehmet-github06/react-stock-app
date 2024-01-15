@@ -37,7 +37,7 @@ const Firms = () => {
       <Grid container gap={2} mt={3} justifyContent={"center"}>
         {[...new Array(8)].map((_, index) => ( 
           <Grid item key={index}>
-            <Skeleton  animation="wave" width={300} height={700} />
+            <Skeleton  animation="pulse" width={300} height={600} />
           </Grid>
         ))}
       </Grid>
