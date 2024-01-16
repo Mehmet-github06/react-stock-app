@@ -1,20 +1,16 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import IconButton from "@mui/material/IconButton";
+// import IconButton from "@mui/material/IconButton";
 import useStockCalls from "../service/useStockCalls";
 
-
-
 export default function ProductTable() {
-  const {deleteStock} = useStockCalls()
+  const { deleteStock } = useStockCalls();
   const { products } = useSelector((state) => state.stock);
 
   const columns = [
-
-
     {
       field: "_id",
       headerName: "#",
@@ -22,6 +18,7 @@ export default function ProductTable() {
       headerAlign: "center",
       align: "center",
       sortable: false,
+      minWidth:"100px",
       // valueGetter: (params) => params.value.slice(-1),
     },
     {
@@ -60,29 +57,42 @@ export default function ProductTable() {
     },
     {
       field: "actions",
+      type: "actions",
       headerName: "Actions",
-      description: "Bu sütunun bir değer alıcısı vardır ve sıralanamaz.",
-      sortable: false,
-      flex: 1,
       headerAlign: "center",
       align: "center",
-      valueGetter: (params) =>
-        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-      renderCell: (params) => (
-        <IconButton
-          aria-label="delete"
-          onClick={() => deleteStock("products",params.id)}
-        >
-          <DeleteForeverIcon />
-        </IconButton>
-      ),
+      flex: 1,
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={<DeleteForeverIcon />}
+          onClick={() => deleteStock("products", params.id)}
+          label="Delete"
+        />,
+      ],
     },
+
+    // {
+    //   field: "actions",
+    //   headerName: "Actions",
+    //   description: "Bu sütunun bir değer alıcısı vardır ve sıralanamaz.",
+    //   sortable: false,
+    //   flex: 1,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   valueGetter: (params) =>
+    //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+    //   renderCell: (params) => (
+    //     <IconButton
+    //       aria-label="delete"
+    //       onClick={() => deleteStock("products",params.id)}
+    //     >
+    //       <DeleteForeverIcon />
+    //     </IconButton>
+    //   ),
+    // },
   ];
 
-
-  function getRowId(row) {
-    return row._id;
-  }
+  const getRowId = (row) => row._id;
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -97,7 +107,7 @@ export default function ProductTable() {
             },
           },
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[5,10,15,20]}
         checkboxSelection
         disableRowSelectionOnClick
         getRowId={getRowId}

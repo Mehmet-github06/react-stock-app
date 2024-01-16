@@ -1,35 +1,37 @@
-import Button from "@mui/material/Button"
-import Typography from "@mui/material/Typography"
-import { useEffect, useState } from "react"
-import useStockCalls from "../service/useStockCalls"
-import { useSelector } from "react-redux"
-import ProductModal from "../components/ProductModal"
-import ProductTable from "../components/ProductTable"
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
+import useStockCalls from "../service/useStockCalls";
+import { useSelector } from "react-redux";
+import ProductModal from "../components/ProductModal";
+import ProductTable from "../components/ProductTable";
 
 const Products = () => {
   // const { getFirms, getSales } = useStockCalls()
-  const { getStocks } = useStockCalls()
-  const { products } = useSelector((state) => state.stock)
+  const { getStocks } = useStockCalls();
+  const { products } = useSelector((state) => state.stock);
 
-  const [info, setInfo] = useState({
+  const initialState = {
     name: "",
-    phone: "",
-    address: "",
-    image: "",
-  })
+    categoryId: "",
+    brandId: "",
+    
+  };
 
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
+  const [info, setInfo] = useState(initialState);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
   const handleClose = () => {
-    setOpen(false)
-    setInfo({ name: "", phone: "", address: "", image: "" })
-  }
+    setOpen(false);
+    setInfo(initialState);
+  };
 
   useEffect(() => {
-    getStocks("products")
-    getStocks("categories")
-    getStocks("brands")
-  }, [])
+    getStocks("products");
+    getStocks("categories");
+    getStocks("brands");
+  }, []);
 
   return (
     <div>
@@ -49,7 +51,7 @@ const Products = () => {
 
       <ProductTable />
     </div>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;
