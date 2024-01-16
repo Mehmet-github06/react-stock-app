@@ -7,7 +7,11 @@ import { Grid } from "@mui/material";
 import FirmCard from "../components/FirmCard";
 import FirmModal from "../components/FirmModal";
 import Skeleton from "@mui/material/Skeleton";
-import TableSkeleton, { ErrorMsg, NoDataMsg } from "../components/DataFetchMsg";
+import TableSkeleton, {
+  CardSkeleton,
+  ErrorMsg,
+  NoDataMsg,
+} from "../components/DataFetchMsg";
 const Firms = () => {
   // const { getFirms, getSales } = useStockCalls()
   const { getStocks } = useStockCalls();
@@ -60,7 +64,11 @@ const Firms = () => {
         setInfo={setInfo}
       />
       {error && <ErrorMsg />}
-      {loading && <TableSkeleton />}
+      {loading && (
+        <CardSkeleton >
+          <FirmCard />
+        </CardSkeleton>
+      )}
 
       {!error && !loading && !firms.length && <NoDataMsg />}
 
