@@ -1,37 +1,33 @@
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
-import useStockCalls from "../service/useStockCalls";
-import { useSelector } from "react-redux";
-import ProductModal from "../components/ProductModal";
-import ProductTable from "../components/ProductTable";
+import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
+import { useEffect, useState } from "react"
+import useStockCalls from "../service/useStockCalls"
+import { useSelector } from "react-redux"
+import { Grid } from "@mui/material"
+import ProductModal from "../components/ProductModal"
+import ProductTable from "../components/ProductTable"
+import TableSkeleton, { ErrorMsg, NoDataMsg } from "../components/DataFetchMsg"
 
 const Products = () => {
   // const { getFirms, getSales } = useStockCalls()
-  const { getStocks } = useStockCalls();
-  const { products } = useSelector((state) => state.stock);
+  const { getStocks } = useStockCalls()
+  const { products, error, loading } = useSelector((state) => state.stock)
 
-  const initialState = {
-    name: "",
-    categoryId: "",
-    brandId: "",
-    
-  };
+  const initialState = { categoryId: "", brandId: "", name: "" }
+  const [info, setInfo] = useState(initialState)
 
-  const [info, setInfo] = useState(initialState);
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
   const handleClose = () => {
-    setOpen(false);
-    setInfo(initialState);
-  };
+    setOpen(false)
+    setInfo(initialState)
+  }
 
   useEffect(() => {
-    getStocks("products");
-    getStocks("categories");
-    getStocks("brands");
-  }, []);
+    getStocks("products")
+    getStocks("categories")
+    getStocks("brands")
+  }, [])
 
   return (
     <div>
@@ -49,9 +45,14 @@ const Products = () => {
         setInfo={setInfo}
       />
 
-      <ProductTable />
-    </div>
-  );
-};
+      {error && <ErrorMsg />}
+      {loading && <TableSkeleton />}
 
-export default Products;
+      {!error && !loading && !products.length && <NoDataMsg />}
+
+      {!loading && !error && products.length > 0 && <ProductTable />}
+    </div>
+  )
+}
+
+export default Products

@@ -7,10 +7,11 @@ import { Grid } from "@mui/material";
 import FirmCard from "../components/FirmCard";
 import FirmModal from "../components/FirmModal";
 import Skeleton from "@mui/material/Skeleton";
+import TableSkeleton, { ErrorMsg, NoDataMsg } from "../components/DataFetchMsg";
 const Firms = () => {
   // const { getFirms, getSales } = useStockCalls()
   const { getStocks } = useStockCalls();
-  const { firms, loading } = useSelector((state) => state.stock);
+  const { firms, loading, error } = useSelector((state) => state.stock);
 
   const [info, setInfo] = useState({
     name: "",
@@ -32,17 +33,17 @@ const Firms = () => {
   }, []);
 
   console.log(firms);
-  if (loading) {
-    return (
-      <Grid container gap={2} mt={3} justifyContent={"center"}>
-        {[...new Array(8)].map((_, index) => ( 
-          <Grid item key={index}>
-            <Skeleton  animation="pulse" width={300} height={600} />
-          </Grid>
-        ))}
-      </Grid>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Grid container gap={2} mt={3} justifyContent={"center"}>
+  //       {[...new Array(8)].map((_, index) => (
+  //         <Grid item key={index}>
+  //           <Skeleton  animation="pulse" width={300} height={600} />
+  //         </Grid>
+  //       ))}
+  //     </Grid>
+  //   );
+  // }
   return (
     <div>
       <Typography variant="h4" color="error" mb={3}>
@@ -58,14 +59,20 @@ const Firms = () => {
         info={info}
         setInfo={setInfo}
       />
+      {error && <ErrorMsg />}
+      {loading && <TableSkeleton />}
 
-      <Grid container gap={2} mt={3} justifyContent={"center"}>
-        {firms?.map((firm) => (
-          <Grid item key={firm._id}>
-            <FirmCard firm={firm} handleOpen={handleOpen} setInfo={setInfo} />
-          </Grid>
-        ))}
-      </Grid>
+      {!error && !loading && !firms.length && <NoDataMsg />}
+
+      {!loading && !error && firms.length > 0 && (
+        <Grid container gap={2} mt={3} justifyContent={"center"}>
+          {firms?.map((firm) => (
+            <Grid item key={firm._id}>
+              <FirmCard firm={firm} handleOpen={handleOpen} setInfo={setInfo} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
     </div>
   );
 };

@@ -1,44 +1,44 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
-import { useSelector } from "react-redux";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-// import IconButton from "@mui/material/IconButton";
-import useStockCalls from "../service/useStockCalls";
+import * as React from "react"
+import Box from "@mui/material/Box"
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid"
+import { useSelector } from "react-redux"
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
+import useStockCalls from "../service/useStockCalls"
 
 export default function ProductTable() {
-  const { deleteStock } = useStockCalls();
-  const { products } = useSelector((state) => state.stock);
+  const { products } = useSelector((state) => state.stock)
+  const { deleteStock } = useStockCalls()
 
+  const getRowId = (row) => row._id
   const columns = [
     {
       field: "_id",
       headerName: "#",
-      flex: 1,
+      flex: 1.4,
+      minWidth: "150px",
       headerAlign: "center",
       align: "center",
       sortable: false,
-      minWidth:"100px",
       // valueGetter: (params) => params.value.slice(-1),
     },
     {
       field: "categoryId",
       headerName: "Category",
-      flex: 1.5,
+      flex: 1,
       headerAlign: "center",
       align: "center",
-      valueGetter: (params) => {
-        console.log(params);
-        return params.row.categoryId.name;
+      valueGetter: (props) => {
+        // console.log(props)
+        return props.row?.categoryId?.name
       },
     },
     {
       field: "brandId",
       headerName: "Brand",
-      flex: 1.5,
+      flex: 1.2,
       headerAlign: "center",
       align: "center",
-      valueGetter: (params) => params.row.brandId?.name ?? "Ülker",
+      valueGetter: (props) => props.row?.brandId?.name,
     },
     {
       field: "name",
@@ -49,28 +49,12 @@ export default function ProductTable() {
     },
     {
       field: "quantity",
-      headerName: "Stock ",
+      headerName: "Stock",
       type: "number",
-      flex: 1,
+      flex: 1.5,
       headerAlign: "center",
       align: "center",
     },
-    {
-      field: "actions",
-      type: "actions",
-      headerName: "Actions",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-      getActions: (params) => [
-        <GridActionsCellItem
-          icon={<DeleteForeverIcon />}
-          onClick={() => deleteStock("products", params.id)}
-          label="Delete"
-        />,
-      ],
-    },
-
     // {
     //   field: "actions",
     //   headerName: "Actions",
@@ -90,31 +74,34 @@ export default function ProductTable() {
     //     </IconButton>
     //   ),
     // },
-  ];
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
+      headerAlign: "center",
+      getActions: (props) => [
+        <GridActionsCellItem
+          icon={<DeleteForeverIcon />}
+          onClick={() => deleteStock("products", props.id)}
+          label="Delete"
+        />,
+      ],
+    },
+  ]
 
-  const getRowId = (row) => row._id;
-
+  // console.log(products)
   return (
     <Box sx={{ width: "100%" }}>
       <DataGrid
         autoHeight
         rows={products}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5,10,15,20]}
+        pageSizeOptions={[5, 10, 20, 50, 100]}
         checkboxSelection
         disableRowSelectionOnClick
         getRowId={getRowId}
-        slots={{
-          toolbar: GridToolbar,
-        }}
+        slots={{ toolbar: GridToolbar }}
       />
     </Box>
-  );
+  )
 }
