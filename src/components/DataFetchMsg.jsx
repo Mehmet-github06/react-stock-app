@@ -29,7 +29,7 @@ export const CardSkeleton = ({ children }) => {
       margin={3}
       
     >
-      {[...Array(8)].map((_, index) => (
+      {[...Array(4)].map((_, index) => (
         <Skeleton key={index} variant="rectangular" flex="1">
           {children}
         </Skeleton>
