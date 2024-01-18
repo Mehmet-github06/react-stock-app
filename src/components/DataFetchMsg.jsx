@@ -20,16 +20,16 @@ export const NoDataMsg = () => {
 export const CardSkeleton = ({ children }) => {
   return (
     <Stack
-      spacing={2}
-      display={"flex"}
+   
       direction={"row"}
       justifyContent={"center"}
       alignItems={"center"}
       flexWrap="wrap" // Wrap özelliği ekleniyor
-      margin={3}
+      gap={3}
+      sx={{ mt: 3 }}
       
     >
-      {[...Array(4)].map((_, index) => (
+      {[...Array(8)].map((_, index) => (
         <Skeleton key={index} variant="rectangular" flex="1">
           {children}
         </Skeleton>
@@ -41,7 +41,7 @@ export const CardSkeleton = ({ children }) => {
 
 const TableSkeleton = () => {
   return (
-    <Stack spacing={1}>
+    <Stack spacing={1} sx={{ mt: 3 }}>
       <Skeleton variant="rectangular" width="100%" height={80} />
       <Skeleton variant="rectangular" width="100%" height={40} />
       <Skeleton variant="rectangular" width="100%" height={40} />
