@@ -65,7 +65,7 @@ const Firms = () => {
       />
       {error && <ErrorMsg />}
       {loading && (
-        <CardSkeleton>
+        <CardSkeleton >
           <FirmCard />
         </CardSkeleton>
       )}
