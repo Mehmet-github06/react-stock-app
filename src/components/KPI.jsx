@@ -45,7 +45,7 @@ const KPI = () => {
       alignItems="center"
       flexWrap="wrap"
       direction="row"
-      gap={2}
+      gap={4}
     >
       {kpiData.map((item) => (
         <Paper

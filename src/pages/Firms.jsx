@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import FirmCard from "../components/FirmCard";
 import FirmModal from "../components/FirmModal";
-import Skeleton from "@mui/material/Skeleton";
+// import Skeleton from "@mui/material/Skeleton";
 import TableSkeleton, {
   CardSkeleton,
   ErrorMsg,

@@ -28,7 +28,7 @@ const Charts = () => {
 
   return (
     <Container>
-      <Grid container mt={2} spacing={2}>
+      <Grid container mt={3} spacing={4}>
         <Grid item xs={12} lg={6}>
           <Card>
             <Title>Total Sales (USD)</Title>
@@ -37,7 +37,7 @@ const Charts = () => {
               data={salesData}
               index="date"
               categories={["amount"]}
-              colors={["indigo"]}
+              colors={["green"]}
               valueFormatter={valueFormatter}
             />
           </Card>
